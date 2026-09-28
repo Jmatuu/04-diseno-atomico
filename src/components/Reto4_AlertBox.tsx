@@ -1,21 +1,55 @@
-// TODO [RETO 4]: Implementa un AlertBox semántico que reciba un tipo
-// (success, warning, error), un mensaje y un callback para cerrarlo.
-//
-// Pregunta 1: ¿Cómo usar un Union Type para limitar los tipos permitidos?
-// Pregunta 2: ¿Cómo muestras el botón de cierre SOLO cuando el padre
-//             pasa una función onClose, sin romper el resto del layout?
-// Prompt IA: "No me des la respuesta. Hazme 3 preguntas para descubrir
-//             cómo mapear un string (tipo de alerta) a un color específico."
-
 import React from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 
-// TODO: Define la interface AlertBoxProps
+type AlertType = 'success' | 'warning' | 'error';
 
-// TODO: Implementa el componente
-
-// TODO: Define los estilos
-
-export default function AlertBox() {
-  return null;
+interface AlertBoxProps {
+  type: AlertType;
+  message: string;
+  onClose?: () => void;
 }
+
+export default function AlertBox({ type, message, onClose }: AlertBoxProps) {
+  return (
+    <View style={[styles.container, styles[type]]}>
+      <Text style={styles.message}>{message}</Text>
+      {onClose ? (
+        <Pressable onPress={onClose} style={styles.closeButton}>
+          <Text style={styles.closeText}>✕</Text>
+        </Pressable>
+      ) : null}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderRadius: 8,
+  },
+  success: {
+    backgroundColor: '#16a34a',
+  },
+  warning: {
+    backgroundColor: '#d97706',
+  },
+  error: {
+    backgroundColor: '#dc2626',
+  },
+  message: {
+    flex: 1,
+    color: '#fff',
+    fontWeight: '600',
+  },
+  closeButton: {
+    marginLeft: 12,
+    paddingHorizontal: 6,
+  },
+  closeText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+});
