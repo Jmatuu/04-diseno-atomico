@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
   content: {
     gap: 8,
   },
-});
+}); 
